@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 
 exports.createRecipe = async (req, res) => {
   try {
-    const { name, description, ingredients, directions, serving, time, department, category, photo, video, link } = req.body;
+    const { name, description, ingredients, directions, serving, time, department, category, photo, videolink } = req.body;
     if (!name) return res.status(400).json({ error: 'name is required' });
-    const recipe = await Recipe.create({ name, description, ingredients, directions, serving, time, department, category, photo, video, link });
+    const recipe = await Recipe.create({ name, description, ingredients, directions, serving, time, department, category, photo, videolink });
     return res.status(201).json(recipe);
   } catch (err) {
     return res.status(400).json({ error: err.message || 'Invalid payload' });
@@ -33,7 +33,7 @@ exports.updateRecipe = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: 'Invalid id' });
     }
-    const allowed = ['name', 'description', 'ingredients', 'directions', 'serving', 'time', 'department', 'category', 'photo', 'video', 'link'];
+    const allowed = ['name', 'description', 'ingredients', 'directions', 'serving', 'time', 'department', 'category', 'photo', 'videolink'];
     const updates = {};
     for (const key of allowed) {
       if (req.body[key] !== undefined) updates[key] = req.body[key];
@@ -54,4 +54,26 @@ exports.deleteRecipe = async (req, res) => {
   const recipe = await Recipe.findByIdAndDelete(id);
   if (!recipe) return res.status(404).json({ error: 'Not found' });
   return res.status(204).send();
+};
+
+exports.updateRecipePhoto = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid id' });
+    }
+    if (!req.file) {
+      return res.status(400).json({ error: 'No photo uploaded' });
+    }
+    const photoUrl = `/uploads/${req.file.filename}`;
+    const recipe = await Recipe.findByIdAndUpdate(
+      id,
+      { photo: photoUrl },
+      { new: true }
+    );
+    if (!recipe) return res.status(404).json({ error: 'Not found' });
+    return res.json(recipe);
+  } catch (err) {
+    return res.status(400).json({ error: err.message || 'Failed to update photo' });
+  }
 };

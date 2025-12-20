@@ -92,3 +92,26 @@ exports.deleteAdmin = async (req, res) => {
     return res.status(400).json({ error: 'Invalid id' });
   }
 };
+
+exports.updateAdminPhoto = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid id' });
+    }
+    if (!req.file) {
+      return res.status(400).json({ error: 'No photo uploaded' });
+    }
+    const photoUrl = `/uploads/${req.file.filename}`;
+    const admin = await Admin.findByIdAndUpdate(
+      id,
+      { profilePhoto: photoUrl },
+      { new: true }
+    );
+    if (!admin) return res.status(404).json({ error: 'Not found' });
+    const { password: _, ...safe } = admin.toObject();
+    return res.json(safe);
+  } catch (err) {
+    return res.status(400).json({ error: err.message || 'Failed to update photo' });
+  }
+};

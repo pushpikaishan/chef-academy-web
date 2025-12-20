@@ -14,6 +14,15 @@ export default function Navbar(){
           <span style={{marginLeft:'1rem'}}>
             <Link to="/admin/register">Admin Register</Link>
           </span>
+          <span style={{marginLeft:'1rem'}}>
+            <Link to="/profile">Profile</Link>
+          </span>
+          <span style={{marginLeft:'1rem'}}>
+            <Link to="/admin">Admin pannaaaaaaaaaaaaal</Link>
+          </span>
+          <span style={{marginLeft:'1rem'}}>
+            <Link to="/login">Login</Link>
+          </span>
         </span>
       </div>
     </nav>
