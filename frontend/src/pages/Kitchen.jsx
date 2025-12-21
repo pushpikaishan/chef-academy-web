@@ -39,7 +39,7 @@ export default function Kitchen() {
       width: '100%',
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)',
-      padding: '60px 20px'
+      padding: '10px 20px'
     }}>
       <div style={{
         maxWidth: '1200px',
