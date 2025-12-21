@@ -39,7 +39,8 @@ export default function Kitchen() {
       width: '100%',
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)',
-      padding: '60px 20px'
+      padding: '1px 20px',
+      marginTop: '0px',
     }}>
       <div style={{
         maxWidth: '1200px',
@@ -55,7 +56,7 @@ export default function Kitchen() {
             color: '#1a1a1a',
             fontSize: 'clamp(32px, 6vw, 56px)',
             fontWeight: '900',
-            marginBottom: '16px',
+            marginBottom: '1px',
             letterSpacing: '-1px'
           }}>
             Kitchen Learning Hub
@@ -249,6 +250,14 @@ export default function Kitchen() {
                   // When on the Recipes tab, go to Kitchen Recipes listing
                   if (activeTab === 1) {
                     navigate('/kitchen/recipes')
+                  }
+                  // When on the Equipments tab, go to Kitchen Tools listing
+                  if (activeTab === 2) {
+                    navigate('/kitchen/tools')
+                  }
+                  // When on the Basic Theory tab, go to Kitchen Theories listing
+                  if (activeTab === 3) {
+                    navigate('/kitchen/theories')
                   }
                 }}>
                   Explore Now
