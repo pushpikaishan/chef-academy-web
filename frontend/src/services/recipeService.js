@@ -5,6 +5,11 @@ export async function getAllRecipes(){
   return data
 }
 
+export async function getRecipeById(id){
+  const { data } = await api.get(`/recipes/${id}`)
+  return data
+}
+
 export async function createRecipe(payload){
   const { data } = await api.post('/recipes', payload)
   return data
@@ -26,5 +31,15 @@ export async function updateRecipePhoto(id, file){
   const { data } = await api.patch(`/recipes/${id}/photo`, form, {
     headers: { 'Content-Type': 'multipart/form-data' }
   })
+  return data
+}
+
+export async function likeRecipe(id){
+  const { data } = await api.post(`/recipes/${id}/like`)
+  return data
+}
+
+export async function unlikeRecipe(id){
+  const { data } = await api.post(`/recipes/${id}/unlike`)
   return data
 }
