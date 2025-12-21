@@ -77,3 +77,39 @@ exports.updateRecipePhoto = async (req, res) => {
     return res.status(400).json({ error: err.message || 'Failed to update photo' });
   }
 };
+
+exports.likeRecipe = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'Invalid id' });
+  }
+  try {
+    const recipe = await Recipe.findByIdAndUpdate(
+      id,
+      { $inc: { likes: 1 } },
+      { new: true }
+    );
+    if (!recipe) return res.status(404).json({ error: 'Not found' });
+    return res.json({ likes: recipe.likes });
+  } catch (err) {
+    return res.status(400).json({ error: err.message || 'Failed to like recipe' });
+  }
+};
+
+exports.unlikeRecipe = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'Invalid id' });
+  }
+  try {
+    const recipe = await Recipe.findOneAndUpdate(
+      { _id: id, likes: { $gt: 0 } },
+      { $inc: { likes: -1 } },
+      { new: true }
+    );
+    if (!recipe) return res.status(404).json({ error: 'Not found or already zero' });
+    return res.json({ likes: recipe.likes });
+  } catch (err) {
+    return res.status(400).json({ error: err.message || 'Failed to unlike recipe' });
+  }
+};

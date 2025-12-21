@@ -13,6 +13,7 @@ const recipeSchema = new Schema(
 		category: { type: String, default: '' },
 		photo: { type: String, default: '' },
 		videolink: { type: String, default: '' },
+		likes: { type: Number, default: 0, min: 0 },
 		
 	},
 	{ timestamps: true }

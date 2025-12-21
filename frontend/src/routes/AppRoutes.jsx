@@ -17,6 +17,12 @@ import UserProfile from '../pages/UserProfile'
 import AdminProfile from '../pages/admin/AdminProfile'
 import Login from '../pages/Login'
 import Allusers from '../pages/admin/allusers'
+import Bakery from '../pages/Bakery'
+import Kitchen from '../pages/Kitchen'
+import Butchry from '../pages/Butchry'
+import KitchenRecipesPage from '../pages/KitchenRecipesPage'
+import KitchenRecipes from '../pages/KitchenRecipes'
+
 
 export default function AppRoutes() {
   return (
@@ -39,6 +45,12 @@ export default function AppRoutes() {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/allusers" element={<Allusers />} />
+      <Route path="/bakery" element={<Bakery />} />
+      <Route path="/kitchen" element={<Kitchen />} />
+      <Route path="/kitchen/recipes" element={<KitchenRecipesPage />} />
+      <Route path="/kitchen/recipes/:id" element={<KitchenRecipes />} />
+      <Route path="/butchry" element={<Butchry />} />
+     
    
     </Routes>
   )

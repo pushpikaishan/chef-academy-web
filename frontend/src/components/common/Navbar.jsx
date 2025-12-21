@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 export default function Navbar(){
+  const { pathname } = useLocation()
+  const isHome = pathname === '/'
   return (
-    <nav className="nav">
-      <div className="container" style={{display:'flex',gap:'1rem'}}>
+    <nav className={`nav ${isHome ? 'nav--transparent' : ''}`}>
+      <div style={{display:'flex',gap:'1rem',width:'100%',padding:'0 16px'}}>
         <Link to="/">Chef Academy</Link>
         <Link to="/recipes">Recipes</Link>
         <Link to="/booking">Booking</Link>
