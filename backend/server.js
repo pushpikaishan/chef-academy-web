@@ -8,6 +8,7 @@ const toolRoutes = require('./routes/tools');
 const recipeRoutes = require('./routes/recipes');
 const adminRoutes = require('./routes/admins');
 const authRoutes = require('./routes/auth');
+const theoryRoutes = require('./routes/theories');
 
 const app = express();
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*'}));
@@ -35,6 +36,7 @@ app.use('/tools', toolRoutes);
 app.use('/recipes', recipeRoutes);
 app.use('/admins', adminRoutes);
 app.use('/auth', authRoutes);
+app.use('/theories', theoryRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
