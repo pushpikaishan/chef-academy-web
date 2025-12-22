@@ -3,13 +3,18 @@ import { useNavigate } from 'react-router-dom'
 import classbanner from '../assets/images/bc.png'
 import bakeryImg from '../assets/images/bakery.png'
 import butcheryImg from '../assets/images/butchery.png'
-import kitchenImg from '../assets/images/kitchen.jpg'
+import kitchenImg from '../assets/images/kitchen.png'
 
 export default function Home(){
   const scrollerRef = useRef(null)
   const [hoveredCard, setHoveredCard] = useState(null)
   const [activeCard, setActiveCard] = useState(0)
   const scrollTimeoutRef = useRef(null)
+  const autoScrollRef = useRef(null)
+  const autoResumeTimeoutRef = useRef(null)
+  const activeIndexRef = useRef(0)
+  const autoDirectionRef = useRef(1) // 1: right, -1: left
+  const isScrollerHoveredRef = useRef(false)
   const navigate = useNavigate()
 
   const scrollBy = (dir) => {
@@ -58,6 +63,7 @@ export default function Home(){
     const delta = (cardRect.left - elRect.left) - (elRect.width / 2 - cardRect.width / 2)
     el.scrollTo({ left: currentLeft + delta, behavior: 'smooth' })
     setActiveCard(index)
+    activeIndexRef.current = index
   }
 
   const centerNearestCard = () => {
@@ -80,16 +86,85 @@ export default function Home(){
   }
 
   const handleScroll = () => {
+    // Pause auto-scroll during user interaction and resume after a short delay
+    if (autoScrollRef.current) {
+      clearInterval(autoScrollRef.current)
+      autoScrollRef.current = null
+    }
+    if (autoResumeTimeoutRef.current) clearTimeout(autoResumeTimeoutRef.current)
     if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current)
     scrollTimeoutRef.current = setTimeout(() => {
       centerNearestCard()
     }, 120)
+    // Only resume auto-scroll if not hovered
+    autoResumeTimeoutRef.current = setTimeout(() => {
+      if (!isScrollerHoveredRef.current) startAutoScroll()
+    }, 800)
+  }
+  // Helpers to pause/resume auto-scroll explicitly
+  const pauseAutoScroll = () => {
+    if (autoScrollRef.current) {
+      clearInterval(autoScrollRef.current)
+      autoScrollRef.current = null
+    }
+    if (autoResumeTimeoutRef.current) {
+      clearTimeout(autoResumeTimeoutRef.current)
+      autoResumeTimeoutRef.current = null
+    }
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current)
+      scrollTimeoutRef.current = null
+    }
+  }
+
+  const resumeAutoScroll = () => {
+    startAutoScroll()
   }
 
   useEffect(() => {
     // Center the Kitchen card (index 1) on initial load
     const id = setTimeout(() => scrollToIndex(1), 0)
     return () => clearTimeout(id)
+  }, [])
+
+  // Auto-scroll controls
+  const startAutoScroll = (intervalMs = 1000) => {
+    if (autoScrollRef.current) {
+      clearInterval(autoScrollRef.current)
+      autoScrollRef.current = null
+    }
+    autoScrollRef.current = setInterval(() => {
+      const el = scrollerRef.current
+      if (!el) return
+      const count = el.children ? el.children.length : departments.length
+      if (!count) return
+      let nextIdx = activeIndexRef.current + autoDirectionRef.current
+      // Bounce at edges to alternate direction (scroll from both sides)
+      if (nextIdx > count - 1) {
+        autoDirectionRef.current = -1
+        nextIdx = Math.max(count - 2, 0)
+      } else if (nextIdx < 0) {
+        autoDirectionRef.current = 1
+        nextIdx = Math.min(1, count - 1)
+      }
+      scrollToIndex(nextIdx)
+    }, intervalMs)
+  }
+
+  const stopAutoScroll = () => {
+    if (autoScrollRef.current) {
+      clearInterval(autoScrollRef.current)
+      autoScrollRef.current = null
+    }
+  }
+
+  // Start auto-scroll on mount and clean up on unmount
+  useEffect(() => {
+    startAutoScroll()
+    return () => {
+      stopAutoScroll()
+      if (autoResumeTimeoutRef.current) clearTimeout(autoResumeTimeoutRef.current)
+    }
   }, [])
 
   return (
@@ -237,9 +312,9 @@ export default function Home(){
                 width: '40px',
                 height: '40px',
                 borderRadius: '50%',
-                border: '2px solid rgba(255,255,255,0.5)',
+                border: '2px solid rgba(255,215,0,0.7)',
                 background: 'rgba(255,255,255,0.1)',
-                color: '#fff',
+                color: '#FFA500',
                 fontSize: '20px',
                 cursor: 'pointer',
                 display: 'flex',
@@ -250,12 +325,12 @@ export default function Home(){
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = 'rgba(255,255,255,0.2)'
-                e.currentTarget.style.border = '2px solid rgba(255,255,255,0.8)'
+                e.currentTarget.style.border = '2px solid  rgba(255,215,0,0.7)'
                 e.currentTarget.style.transform = 'scale(1.08)'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'rgba(255,255,255,0.1)'
-                e.currentTarget.style.border = '2px solid rgba(255,255,255,0.5)'
+                e.currentTarget.style.border = '2px solid  rgba(255,215,0,0.7)'
                 e.currentTarget.style.transform = 'scale(1)'
               }}
             >
@@ -280,6 +355,8 @@ export default function Home(){
                 maskImage: 'linear-gradient(to right, transparent 0, black 24px, black calc(100% - 24px), transparent 100%)'
               }}
               onScroll={handleScroll}
+              onMouseEnter={() => { isScrollerHoveredRef.current = true; pauseAutoScroll() }}
+              onMouseLeave={() => { isScrollerHoveredRef.current = false; resumeAutoScroll() }}
               onKeyDown={(e) => {
                 if (e.key === 'ArrowLeft') scrollBy('left')
                 if (e.key === 'ArrowRight') scrollBy('right')
@@ -291,8 +368,8 @@ export default function Home(){
                   key={idx}
                   className="dept-card"
                   style={{
-                    marginLeft: '24px',
-                    marginRight: '24px',
+                    marginLeft: '15px',
+                    marginRight: '15px',
                     display: 'flex',
                     flexDirection: 'column',
                     scrollSnapAlign: 'center',
@@ -314,9 +391,9 @@ export default function Home(){
                       overflow: 'hidden',
                       cursor: 'pointer',
                       transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                      boxShadow: hoveredCard === idx 
-                        ? '0 20px 40px rgba(0,0,0,0.3)' 
-                        : '0 10px 20px rgba(0,0,0,0.2)'
+                      // boxShadow: hoveredCard === idx 
+                      //   ? '0 20px 40px rgba(0,0,0,0.3)' 
+                      //   : '0 10px 20px rgba(0,0,0,0.2)'
                     }}
                   >
                     {/* Background image */}
@@ -337,7 +414,7 @@ export default function Home(){
                     <div style={{
                       position: 'absolute',
                       inset: 0,
-                      background: 'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%)',
+                      ///background: 'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%)',
                       transition: 'all 0.4s ease'
                     }} />
                   </div>
@@ -351,7 +428,7 @@ export default function Home(){
                     border: hoveredCard === idx 
                       ? '1px solid rgba(255,215,0,0.4)' 
                       : '1px solid rgba(255,255,255,0.2)',
-                    borderRadius: '0 0 16px 16px',
+                    borderRadius: '16px 16px 16px 16px',
                     padding: '24px',
                     transition: 'all 0.4s ease',
                     boxShadow: hoveredCard === idx 
@@ -433,9 +510,9 @@ export default function Home(){
                 width: '40px',
                 height: '40px',
                 borderRadius: '50%',
-                border: '2px solid rgba(255,255,255,0.5)',
+                border: '2px solid rgba(255,215,0,0.7)',
                 background: 'rgba(255,255,255,0.1)',
-                color: '#fff',
+                color: '#FFA500',
                 fontSize: '20px',
                 cursor: 'pointer',
                 display: 'flex',
@@ -446,12 +523,12 @@ export default function Home(){
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = 'rgba(255,255,255,0.2)'
-                e.currentTarget.style.border = '2px solid rgba(255,255,255,0.8)'
+                e.currentTarget.style.border = '2px solid  rgba(255,215,0,0.7)'
                 e.currentTarget.style.transform = 'scale(1.08)'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'rgba(255,255,255,0.1)'
-                e.currentTarget.style.border = '2px solid rgba(255,255,255,0.5)'
+                e.currentTarget.style.border = '2px solid  rgba(255,215,0,0.7)'
                 e.currentTarget.style.transform = 'scale(1)'
               }}
             >
@@ -465,8 +542,9 @@ export default function Home(){
           display: 'flex',
           justifyContent: 'center',
           gap: '8px',
-          marginTop: '32px',
-          gridColumn: '1 / -1'
+          marginTop: '24px',
+          gridColumn: '1 / -1',
+          
         }}>
           {departments.map((_, idx) => (
             <div

@@ -38,3 +38,8 @@ export async function deleteUser(id){
   const { data } = await api.delete(`/users/${id}`)
   return data
 }
+
+export async function updateUserWatch(userId, department){
+  const { data } = await api.patch(`/users/${userId}/watch`, { department })
+  return data
+}

@@ -247,6 +247,11 @@ export default function Bakery() {
                   e.currentTarget.style.boxShadow = '0 8px 24px rgba(255,215,0,0.3)'
                 }}
                 onClick={() => {
+                  // Video Lessons tab → Bakery Lessons listing
+                  if (activeTab === 0) {
+                    navigate('/lessons?department=Bakery')
+                    return
+                  }
                   // Recipes tab → Bakery Recipes listing
                   if (activeTab === 1) {
                     navigate('/bakery/recipes')

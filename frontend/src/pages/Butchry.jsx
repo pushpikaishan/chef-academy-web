@@ -247,6 +247,11 @@ export default function Butchry() {
                   e.currentTarget.style.boxShadow = '0 8px 24px rgba(255,215,0,0.3)'
                 }}
                 onClick={() => {
+                  // Video Lessons tab → Butchery Lessons listing
+                  if (activeTab === 0) {
+                    navigate('/lessons?department=Butchery')
+                    return
+                  }
                   // Recipes tab → Butchry Recipes listing
                   if (activeTab === 1) {
                     navigate('/butchry/recipes')

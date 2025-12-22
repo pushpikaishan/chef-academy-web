@@ -26,6 +26,7 @@ import KitchenRecipes from '../pages/RecipesCard'
 import KitchenToolsPage from '../pages/AllToolsPage'
 import KitchenTheoriesPage from '../pages/AllTheoriesPage'
 import KitchenTheory from '../pages/TheoryCard'
+import AllLessonsPage from '../pages/AllLessonsPage'
 
 
 export default function AppRoutes() {
@@ -68,6 +69,7 @@ export default function AppRoutes() {
       <Route path="/butchry/theories" element={<KitchenTheoriesPage />} />
       <Route path="/butchry/theories/:id" element={<KitchenTheory />} />
       <Route path="/butchry" element={<Butchry />} />
+      <Route path="/lessons" element={<AllLessonsPage />} />
      
    
     </Routes>

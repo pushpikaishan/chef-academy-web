@@ -106,3 +106,31 @@ exports.updateUserPhoto = async (req, res) => {
     return res.status(400).json({ error: err.message || 'Failed to update photo' });
   }
 };
+
+// Increment watch stats for a user by department
+exports.updateWatchStats = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid id' });
+    }
+    const { department } = req.body || {};
+    if (!department || typeof department !== 'string') {
+      return res.status(400).json({ error: 'department is required' });
+    }
+    const d = department.toLowerCase();
+    let field = null;
+    if (d.includes('kitchen')) field = 'watchStats.kitchen';
+    else if (d.includes('bakery')) field = 'watchStats.bakery';
+    else if (d.includes('butch')) field = 'watchStats.butchery';
+    else return res.status(400).json({ error: 'Unknown department' });
+
+    const inc = { [field]: 1, 'watchStats.total': 1 };
+    const user = await User.findByIdAndUpdate(id, { $inc: inc }, { new: true });
+    if (!user) return res.status(404).json({ error: 'Not found' });
+    const { password: _, ...safe } = user.toObject();
+    return res.json(safe);
+  } catch (err) {
+    return res.status(400).json({ error: err.message || 'Failed to update watch stats' });
+  }
+};

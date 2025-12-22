@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import kitchenImg from '../assets/images/kitchen.jpg'
+import kitchenImg from '../assets/images/kitchen.png'
 
 export default function Kitchen() {
   const [activeTab, setActiveTab] = useState(0)
@@ -249,6 +249,11 @@ export default function Kitchen() {
                   e.currentTarget.style.boxShadow = '0 8px 24px rgba(255,215,0,0.3)'
                 }}
                 onClick={() => {
+                  // Video Lessons tab → Kitchen Lessons listing
+                  if (activeTab === 0) {
+                    navigate('/lessons?department=Kitchen')
+                    return
+                  }
                   // When on the Recipes tab, go to Kitchen Recipes listing
                   if (activeTab === 1) {
                     navigate('/kitchen/recipes')
