@@ -75,7 +75,7 @@ export default function KitchenRecipes(){
 			<div style={{ maxWidth: '900px', margin: '0 auto' }}>
 				{/* Back Button */}
 				<button
-					onClick={() => navigate('/kitchen/recipes')}
+					onClick={() => navigate(-1)}
 					style={{
 						padding: '8px 16px',
 						background: 'transparent',

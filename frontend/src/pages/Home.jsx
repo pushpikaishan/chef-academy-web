@@ -246,8 +246,8 @@ export default function Home(){
             fontWeight: '900',
             color: '#fff',
             marginBottom: '16px',
-            textShadow: '0 10px 30px rgba(0,0,0,0.5)',
-            background: 'linear-gradient(135deg, #fff 0%, #FFD700 100%)',
+            textShadow: '0 10px 30px rgba(162, 160, 160, 0.5)',
+            background: 'linear-gradient(135deg, #FFA500 0%, #FFD700 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
@@ -266,7 +266,7 @@ export default function Home(){
           
           <p style={{
             fontSize: '14px',
-            color: 'rgba(255,255,255,0.7)',
+            color: 'rgba(255, 255, 255, 0.7)',
             maxWidth: '600px',
             margin: '0 auto'
           }}>
@@ -289,7 +289,7 @@ export default function Home(){
           }}>
             <h2 style={{
               margin: 0,
-              color: '#fff',
+              color: ' #FFD700',
               fontSize: '28px',
               fontWeight: '700',
               letterSpacing: '0.5px'

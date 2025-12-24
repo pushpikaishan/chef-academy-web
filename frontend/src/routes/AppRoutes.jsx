@@ -1,9 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Home from '../pages/Home'
 import About from '../pages/About'
-import Recipes from '../pages/Recipes'
 import Tools from '../pages/Tools'
-import Booking from '../pages/Booking'
 import Contact from '../pages/Contact'
 import AdminDashboard from '../pages/admin/AdminDashboard'
 import UsersManage from '../pages/admin/UsersManage'
@@ -27,6 +25,7 @@ import KitchenToolsPage from '../pages/AllToolsPage'
 import KitchenTheoriesPage from '../pages/AllTheoriesPage'
 import KitchenTheory from '../pages/TheoryCard'
 import AllLessonsPage from '../pages/AllLessonsPage'
+import Loader from '../components/common/Loader'
 
 
 export default function AppRoutes() {
@@ -34,9 +33,7 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
-      <Route path="/recipes" element={<Recipes />} />
       <Route path="/tools" element={<Tools />} />
-      <Route path="/booking" element={<Booking />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/admin/admins" element={<AdminsManage />} />
@@ -70,6 +67,7 @@ export default function AppRoutes() {
       <Route path="/butchry/theories/:id" element={<KitchenTheory />} />
       <Route path="/butchry" element={<Butchry />} />
       <Route path="/lessons" element={<AllLessonsPage />} />
+      <Route path="/loader" element={<Loader message="Preparing your experience..." fullscreen={false} />} /> 
      
    
     </Routes>
