@@ -10,6 +10,7 @@ import ToolsManage from '../pages/admin/ToolsManage'
 import LessonsManage from '../pages/admin/LessonsManage'
 import AdminsManage from '../pages/admin/AdminsManage'
 import TheoriesManage from '../pages/admin/TheoriesManage'
+import QuestionsManage from '../pages/admin/QuestionsManage'
 import Register from '../pages/Register'
 import AdminRegister from '../pages/admin/AdminRegister'
 import UserProfile from '../pages/UserProfile'
@@ -42,6 +43,7 @@ export default function AppRoutes() {
       <Route path="/admin/tools" element={<ToolsManage />} />
       <Route path="/admin/lessons" element={<LessonsManage />} />
       <Route path="/admin/theories" element={<TheoriesManage />} />
+      <Route path="/admin/questions" element={<QuestionsManage />} />
       <Route path="/admin/register" element={<AdminRegister />} />
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/admin/profile" element={<AdminProfile />} />

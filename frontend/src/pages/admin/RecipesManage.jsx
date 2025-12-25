@@ -181,9 +181,9 @@ export default function RecipesManage(){
             <Field label="Department">
               <select value={draft.department} onChange={e=>setDraft(d=>({...d,department:e.target.value}))}>
                 <option value="">Select department</option>
-                <option value="Kitchen">Hot & Cold Kitchen</option>
-                <option value="Bakery">Bakery & Pastry</option>
-                <option value="Butchery">Butchery & Fish</option>
+                <option value="Kitchen">Kitchen</option>
+                <option value="Bakery">Bakery</option>
+                <option value="Butchery">Butchery</option>
               </select>
             </Field>
             <div style={{display:'flex',gap:8}}>

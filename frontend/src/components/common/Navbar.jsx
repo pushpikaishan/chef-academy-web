@@ -21,13 +21,14 @@ export default function Navbar(){
   return (
     <>
       <nav style={{
-        background: isHome ? 'transparent' : 'linear-gradient(to bottom, #0f172a, rgba(0, 0, 0, 0.8))',
-        borderBottom: isHome ? 'none' : '1px solid #1e293b',
+        background:  'linear-gradient(to bottom, #0f172a, rgba(0, 0, 0, 0.8))',
+        borderBottom:'1px solid #1e293b',
         padding: '12px 20px',
         position: 'sticky',
         top: 0,
         zIndex: 1000,
-        backdropFilter: 'blur(10px)'
+        backdropFilter: 'blur(10px)',
+        
       }}>
         <div style={{
           maxWidth: '1280px',

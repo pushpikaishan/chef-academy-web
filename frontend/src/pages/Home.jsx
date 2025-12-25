@@ -16,6 +16,10 @@ export default function Home(){
   const autoDirectionRef = useRef(1) // 1: right, -1: left
   const isScrollerHoveredRef = useRef(false)
   const navigate = useNavigate()
+  const APP_DOWNLOAD_URL = 'https://example.com/chef-academy-app'
+  const FULL_TAGLINE = ' Build professional skills in bakery, butchery, and kitchen operations through hands-on training, modern tools, and expert recipes.'
+  const [typedTagline, setTypedTagline] = useState('')
+  const [typingDone, setTypingDone] = useState(false)
 
   const scrollBy = (dir) => {
     const el = scrollerRef.current
@@ -127,6 +131,21 @@ export default function Home(){
     return () => clearTimeout(id)
   }, [])
 
+  // Typewriter effect for the header description line
+  useEffect(() => {
+    let i = 0
+    const speedMs = 35
+    const intervalId = setInterval(() => {
+      setTypedTagline(prev => prev + FULL_TAGLINE.charAt(i))
+      i += 1
+      if (i >= FULL_TAGLINE.length) {
+        clearInterval(intervalId)
+        setTypingDone(true)
+      }
+    }, speedMs)
+    return () => clearInterval(intervalId)
+  }, [])
+
   // Auto-scroll controls
   const startAutoScroll = (intervalMs = 1000) => {
     if (autoScrollRef.current) {
@@ -173,122 +192,91 @@ export default function Home(){
       width: '100%',
       minHeight: '100vh'
     }}>
-      
-
-      {/* Animated background elements */}
-      <div style={{
-        position: 'absolute',
-        top: '10%',
-        right: '10%',
-        width: '300px',
-        height: '300px',
-        background: 'radial-gradient(circle, rgba(255,107,107,0.1) 0%, transparent 70%)',
-        borderRadius: '50%',
-        animation: 'float 6s ease-in-out infinite'
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '10%',
-        left: '5%',
-        width: '250px',
-        height: '250px',
-        background: 'radial-gradient(circle, rgba(107,255,155,0.1) 0%, transparent 70%)',
-        borderRadius: '50%',
-        animation: 'float 8s ease-in-out infinite',
-        animationDelay: '2s'
-      }} />
-
       {/* Main content */}
       <div className="home-content" style={{
         position: 'relative',
-        zIndex: 10,
-        width: '100vw',
-        marginLeft: 'calc(50% - 50vw)',
-        marginRight: 'calc(50% - 50vw)',
-        paddingLeft: '20px',
+       marginTop: '0px',
+        width: '100%',
+        paddingLeft: '0px',
         paddingRight: '20px',
-        paddingTop: '80px',
-        padding: '40px 30px',
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
+        paddingTop: '0px',
+        paddingBottom: '20px',
         gap: '24px',
         alignItems: 'start'
       }}>
         
         {/* Header section */}
         <div className="header-section" style={{
-          textAlign: 'left',
+          textAlign: 'center',
           marginBottom: '24px',
-          animation: 'slideDown 1s ease-out'
+          animation: 'slideDown 1s ease-out',
+        
         }}>
-          <div style={{
-            display: 'inline-block',
-            background: 'rgba(255,255,255,0.1)',
-            border: '1px solid rgba(255,255,255,0.3)',
-            borderRadius: '30px',
-            padding: '8px 20px',
-            marginBottom: '20px',
-            backdropFilter: 'blur(10px)'
-          }}>
-            <span style={{
-              color: '#FFD700',
-              fontSize: '12px',
-              fontWeight: '600',
-              letterSpacing: '1.5px',
-              textTransform: 'uppercase'
-            }}>
-              🎓 Premium Culinary Education
-            </span>
-          </div>
-
           <h1 style={{
             fontSize: 'clamp(32px, 8vw, 64px)',
             fontWeight: '900',
+            marginTop: '-10px',
             color: '#fff',
-            marginBottom: '16px',
+            marginBottom: '10px',
             textShadow: '0 10px 30px rgba(162, 160, 160, 0.5)',
-            background: 'linear-gradient(135deg, #FFA500 0%, #FFD700 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
+            // Ensure visible text: remove transparent fill/clip without gradient
           }}>
             Welcome to Chef Academy
           </h1>
 
           <p style={{
             fontSize: 'clamp(14px, 3vw, 20px)',
-            color: 'rgba(255,255,255,0.9)',
+            color: 'rgba(255,215,0,0.9)',
             marginBottom: '8px',
-            letterSpacing: '0.5px'
+            fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
+            letterSpacing: '0.8px'
           }}>
-            Master culinary arts from world-class instructors
+            Master Culinary Arts From World-Class Instructors
           </p>
           
           <p style={{
             fontSize: '14px',
             color: 'rgba(255, 255, 255, 0.7)',
             maxWidth: '600px',
-            margin: '0 auto'
+            margin: '0 auto',
+            display: 'inline-block',
+            animation: 'slideUp 0.8s ease-out, textPulse 3.6s ease-in-out infinite'
           }}>
-            Explore recipes, tools, and courses to elevate your cooking skills
+            {typedTagline}
+            {!typingDone && (
+              <span
+                aria-hidden="true"
+                style={{
+                  display: 'inline-block',
+                  width: '2px',
+                  height: '1em',
+                  marginLeft: '3px',
+                  background: 'rgba(255,215,0,0.9)',
+                  animation: 'blink 1s step-end infinite'
+                }}
+              />
+            )}
           </p>
+
+         
         </div>
 
         {/* Department cards section */}
         
         <div className="dept-section" style={{
-          padding: '0 16px'
+          padding: '0 16px',
+          
         }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            marginBottom: '16px',
-            paddingBottom: '12px',
+            marginBottom: '8px',
+            paddingBottom: '8px',
             borderBottom: '1px solid rgba(255,255,255,0.2)'
           }}>
             <h2 style={{
-              margin: 0,
+              margin: '24px',
               color: ' #FFD700',
               fontSize: '28px',
               fontWeight: '700',
@@ -373,7 +361,7 @@ export default function Home(){
                     display: 'flex',
                     flexDirection: 'column',
                     scrollSnapAlign: 'center',
-                    minWidth: '340px',
+                    minWidth: '360px',
                     transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                     transform: hoveredCard === idx ? 'translateY(-12px)' : 'translateY(0)'
                   }}
@@ -386,7 +374,7 @@ export default function Home(){
                     style={{
                       position: 'relative',
                       width: '100%',
-                      height: '300px',
+                      height: '100%',
                       borderRadius: '16px 16px 0 0',
                       overflow: 'hidden',
                       cursor: 'pointer',
@@ -402,7 +390,7 @@ export default function Home(){
                       alt={dept.title}
                       style={{
                         width: '100%',
-                        height: '100%',
+                        height: '90%',
                         objectFit: 'cover',
                         transition: 'transform 0.6s ease',
                         transform: hoveredCard === idx ? 'scale(1.15)' : 'scale(1)'
@@ -541,10 +529,11 @@ export default function Home(){
         <div style={{
           display: 'flex',
           justifyContent: 'center',
+          alignItems: 'center',
           gap: '8px',
-          marginTop: '24px',
+          marginTop: '10px',
           gridColumn: '1 / -1',
-          
+          width: '100%'
         }}>
           {departments.map((_, idx) => (
             <div
@@ -563,6 +552,49 @@ export default function Home(){
             />
           ))}
         </div>
+
+        {/* Download App CTA centered below dots */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '85px',
+          gridColumn: '1 / -1'
+        }}>
+          <button
+            aria-label="Download Chef Academy App"
+            onClick={() => window.open(APP_DOWNLOAD_URL, '_blank', 'noopener,noreferrer')}
+            style={{
+              background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
+              color: '#000',
+              border: '1px solid rgba(255,255,255,0.3)',
+              padding: '12px 20px',
+              borderRadius: '10px',
+              fontSize: '14px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              boxShadow: '0 8px 24px rgba(255,215,0,0.25)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
+              e.currentTarget.style.boxShadow = '0 10px 28px rgba(255, 157, 0, 0.35)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)'
+              e.currentTarget.style.boxShadow = '0 8px 24px rgba(255,215,0,0.25)'
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3v10m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <span>Download App</span>
+          </button>
+        </div>
       </div>
 
       {/* Global styles */}
@@ -578,6 +610,7 @@ export default function Home(){
           padding: 0;
           width: 100%;
           height: 100%;
+          overflow-x: hidden;
           background-image: url(${classbanner});
           background-size: cover;
           background-position: center;
@@ -609,6 +642,25 @@ export default function Home(){
           to {
             opacity: 1;
             transform: translateY(0);
+          }
+        }
+
+        /* Blinking caret for typewriter effect */
+        @keyframes blink {
+          0%, 50% { opacity: 1; }
+          50.01%, 100% { opacity: 0; }
+        }
+
+        /* Subtle glow pulse for header description */
+        @keyframes textPulse {
+          0% {
+            text-shadow: 0 0 0 rgba(255,215,0,0);
+          }
+          50% {
+            text-shadow: 0 0 10px rgba(255,215,0,0.28);
+          }
+          100% {
+            text-shadow: 0 0 0 rgba(255,215,0,0);
           }
         }
 

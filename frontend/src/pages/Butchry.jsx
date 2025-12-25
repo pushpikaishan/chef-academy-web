@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import butcheryImg from '../assets/images/butchery.png'
+import { getCountsByDepartment } from '../services/statsService'
 
 export default function Butchry() {
   const [activeTab, setActiveTab] = useState(0)
   const [hoveredBtn, setHoveredBtn] = useState(null)
+  const [counts, setCounts] = useState({ lessons: 0, recipes: 0, theories: 0 })
   const navigate = useNavigate()
 
   const tabs = [
@@ -34,12 +36,29 @@ export default function Butchry() {
     }
   ]
 
+  useEffect(() => {
+    let mounted = true
+    ;(async () => {
+      try {
+        const data = await getCountsByDepartment('Butchery')
+        if (mounted && data) setCounts({
+          lessons: Number(data.lessons || 0),
+          recipes: Number(data.recipes || 0),
+          theories: Number(data.theories || 0)
+        })
+      } catch (_) {
+        // ignore errors to keep UI responsive
+      }
+    })()
+    return () => { mounted = false }
+  }, [])
+
   return (
     <div style={{
       width: '100%',
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)',
-      padding: '1px 20px',
+      //background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)',
+      //padding: '1px 20px',
       marginTop: '0px',
     }}>
       <div style={{
@@ -305,9 +324,9 @@ export default function Butchry() {
             marginTop: '48px'
           }}>
             {[
-              { number: '250+', label: 'Video Lessons' },
-              { number: '400+', label: 'Recipes' },
-              { number: '80+', label: 'Experts' }
+              { number: counts.lessons, label: 'Video Lessons' },
+              { number: counts.recipes, label: 'Recipes' },
+              { number: counts.theories, label: 'Theorys' }
             ].map((stat, idx) => (
               <div
                 key={idx}
@@ -335,7 +354,7 @@ export default function Butchry() {
                   marginBottom: '8px',
                   letterSpacing: '-1px'
                 }}>
-                  {stat.number}
+                  {String(stat.number)}
                 </div>
                 <div style={{
                   color: '#666',

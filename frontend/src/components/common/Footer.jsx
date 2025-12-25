@@ -37,21 +37,7 @@ export default function Footer(){
       margin: '0 auto 15px',
       lineHeight: '1.5'
     },
-    button: {
-      padding: '12px 24px',
-      background: 'linear-gradient(to right, #FFD700, #FFA500)',
-      color: '#ffffff',
-      fontWeight: 'bold',
-      fontSize: '14px',
-      border: 'none',
-      borderRadius: '8px',
-      cursor: 'pointer',
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: '8px',
-      transition: 'all 0.3s ease',
-      boxShadow: '0 0 20px rgba(255, 215, 0, 0.3)'
-    },
+   
     linksWrapper: {
       display: 'flex',
       justifyContent: 'center',
@@ -121,15 +107,7 @@ export default function Footer(){
     }
   }
 
-  const handleButtonHover = (e) => {
-    e.target.style.transform = 'scale(1.05)'
-    e.target.style.boxShadow = '0 0 30px rgba(255, 215, 0, 0.5)'
-  }
-
-  const handleButtonLeave = (e) => {
-    e.target.style.transform = 'scale(1)'
-    e.target.style.boxShadow = '0 0 20px rgba(251, 146, 60, 0.3)'
-  }
+  
 
   const handleLinkHover = (e) => {
     e.target.style.color = '#FFD700'
@@ -160,13 +138,7 @@ export default function Footer(){
           <p style={footerStyle.description}>
             Master the art of culinary excellence with world-class instructors and innovative techniques.
           </p>
-          <button 
-            style={footerStyle.button}
-            onMouseEnter={handleButtonHover}
-            onMouseLeave={handleButtonLeave}
-          >
-            Get Started →
-          </button>
+          
         </div>
 
         {/* Links Section */}

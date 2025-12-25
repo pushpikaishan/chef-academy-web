@@ -63,7 +63,7 @@ export default function KitchenRecipesPage() {
   }, [location.pathname])
 
   return (
-    <div style={{ width: '100%', minHeight: '100vh', background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)', padding: '60px 20px' }}>
+    <div style={{ width: '100%', minHeight: '100vh', background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)', padding: '0 10px 24px' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <h1 style={{ color: '#1a1a1a', fontSize: 'clamp(28px, 5vw, 44px)', fontWeight: 900, letterSpacing: '-0.5px', margin: 0 }}>

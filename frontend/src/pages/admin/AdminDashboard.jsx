@@ -35,6 +35,7 @@ export default function AdminDashboard(){
   const goAdmins = () => navigate('/admin/admins')
   const goAllusers = () => navigate('/allusers')
   const goTheories = () => navigate('/admin/theories')
+  const goQuestions = () => navigate('/admin/questions')
 
   return (
     <div>
@@ -89,6 +90,10 @@ export default function AdminDashboard(){
         <div role="button" onClick={goTheories} style={{border:'1px solid #ddd',borderRadius:'8px',padding:'16px',cursor:'pointer'}}>
           <div style={{fontWeight:600, marginBottom:6}}>Manage Theory</div>
           <div style={{color:'#555'}}>Create and update theory content</div>
+        </div>
+        <div role="button" onClick={goQuestions} style={{border:'1px solid #ddd',borderRadius:'8px',padding:'16px',cursor:'pointer'}}>
+          <div style={{fontWeight:600, marginBottom:6}}>User Questions</div>
+          <div style={{color:'#555'}}>Review and delete submissions</div>
         </div>
       </div>
     </div>

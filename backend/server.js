@@ -10,6 +10,8 @@ const adminRoutes = require('./routes/admins');
 const authRoutes = require('./routes/auth');
 const theoryRoutes = require('./routes/theories');
 const lessonVideoRoutes = require('./routes/lessonvideos');
+const userQuestionRoutes = require('./routes/userquestions');
+const statsRoutes = require('./routes/stats');
 
 const app = express();
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*'}));
@@ -39,6 +41,8 @@ app.use('/admins', adminRoutes);
 app.use('/auth', authRoutes);
 app.use('/theories', theoryRoutes);
 app.use('/lessonvideos', lessonVideoRoutes);
+app.use('/userquestions', userQuestionRoutes);
+app.use('/stats', statsRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
