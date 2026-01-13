@@ -1,12 +1,16 @@
 import { Link, useLocation } from 'react-router-dom'
 import appIcon from '../../assets/images/appicon.png'
 import { useState, useEffect } from 'react'
+import useAuth from '../../hooks/useAuth'
 
 export default function Navbar(){
   const { pathname } = useLocation()
   const isHome = pathname === '/'
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const { user } = useAuth() || {}
+  const role = user?.role || localStorage.getItem('role')
+  const isAdmin = role === 'admin'
 
   useEffect(() => {
     const handleResize = () => {
@@ -124,32 +128,64 @@ export default function Navbar(){
 
           {/* Profile Button - Desktop */}
           {!isMobile && (
-            <Link 
-              to="/profile" 
-              style={{
-                padding: '8px 20px',
-                background: 'linear-gradient(to right, #FFD700, #FFA500)',
-                color: '#ffffff',
-                textDecoration: 'none',
-                fontSize: '14px',
-                fontWeight: 'bold',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 0 15px rgba(255, 215, 0, 0.2)'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'scale(1.05)'
-                e.target.style.boxShadow = '0 0 25px rgba(255, 215, 0, 0.4)'
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'scale(1)'
-                e.target.style.boxShadow = '0 0 15px rgba(255, 215, 0, 0.2)'
-              }}
-            >
-              Profile
-            </Link>
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              {isAdmin && (
+                <Link 
+                  to="/admin" 
+                  style={{
+                    padding: '8px 16px',
+                    background: 'linear-gradient(to right, #34d399, #10b981)',
+                    color: '#ffffff',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    border: 'none',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 0 15px rgba(16, 185, 129, 0.25)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.transform = 'scale(1.05)'
+                    e.target.style.boxShadow = '0 0 25px rgba(16, 185, 129, 0.4)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.transform = 'scale(1)'
+                    e.target.style.boxShadow = '0 0 15px rgba(16, 185, 129, 0.25)'
+                  }}
+                >
+                  Admin Dashboard
+                </Link>
+              )}
+              {!isAdmin && (
+                <Link 
+                  to="/profile" 
+                  style={{
+                    padding: '8px 20px',
+                    background: 'linear-gradient(to right, #FFD700, #FFA500)',
+                    color: '#ffffff',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    border: 'none',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 0 15px rgba(255, 215, 0, 0.2)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.transform = 'scale(1.05)'
+                    e.target.style.boxShadow = '0 0 25px rgba(255, 215, 0, 0.4)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.transform = 'scale(1)'
+                    e.target.style.boxShadow = '0 0 15px rgba(255, 215, 0, 0.2)'
+                  }}
+                >
+                  Profile
+                </Link>
+              )}
+            </div>
           )}
 
           {/* Hamburger Menu */}
@@ -218,8 +254,27 @@ export default function Navbar(){
               }}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Profile
+              {!isAdmin ? 'Profile' : ''}
             </Link>
+            {isAdmin && (
+              <Link 
+                to="/admin" 
+                style={{
+                  padding: '8px 20px',
+                  background: 'linear-gradient(to right, #34d399, #10b981)',
+                  color: '#ffffff',
+                  textDecoration: 'none',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  borderRadius: '6px',
+                  textAlign: 'center',
+                  cursor: 'pointer'
+                }}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Admin Dashboard
+              </Link>
+            )}
           </div>
         )}
       </nav>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import BackFloatButton from '../components/common/BackFloatButton'
 import { getTheoryById } from '../services/theoryService'
 
 export default function KitchenTheory() {
@@ -37,26 +38,10 @@ export default function KitchenTheory() {
   }, [id])
 
   return (
-    <div style={{ width: '100%', minHeight: '100vh', background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)', padding: '60px 20px' }}>
+    <div style={{ width: '100%', minHeight: '100vh', padding: '60px 20px' }}>
       <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
         <div style={{ marginBottom: 16 }}>
-          <button
-            onClick={() => navigate(-1)}
-            style={{
-              padding: '10px 16px',
-              background: 'transparent',
-              color: '#333',
-              border: '2px solid #ddd',
-              borderRadius: 8,
-              fontSize: '14px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              transition: 'all 0.3s ease'
-            }}
-            aria-label="Go back"
-          >
-            ← Back
-          </button>
+         
         </div>
         {error && <div style={{ color: 'crimson', marginBottom: 16 }}>{error}</div>}
         {loading ? (
@@ -93,6 +78,7 @@ export default function KitchenTheory() {
           </div>
         )}
       </div>
+      <BackFloatButton label="Back" />
     </div>
   )
 }

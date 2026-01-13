@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import BackFloatButton from '../components/common/BackFloatButton'
 import { getRecipeById, likeRecipe, unlikeRecipe } from '../services/recipeService'
 
 export default function KitchenRecipes(){
@@ -73,22 +74,7 @@ export default function KitchenRecipes(){
 			padding: '40px 20px'
 		}}>
 			<div style={{ maxWidth: '900px', margin: '0 auto' }}>
-				{/* Back Button */}
-				<button
-					onClick={() => navigate(-1)}
-					style={{
-						padding: '8px 16px',
-						background: 'transparent',
-						border: 'none',
-						fontSize: '14px',
-						fontWeight: '600',
-						cursor: 'pointer',
-						marginBottom: '32px',
-						color: '#666'
-					}}
-				>
-					← Back
-				</button>
+				
 
 				{error && (
 					<div style={{
@@ -414,6 +400,7 @@ export default function KitchenRecipes(){
 						</div>
 					</div>
 				)}
+				<BackFloatButton label="Back" />
 			</div>
 
 			<style>{`

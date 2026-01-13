@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import BackFloatButton from '../components/common/BackFloatButton'
 import { getAllTools } from '../services/toolService'
 
 export default function KitchenToolsPage() {
@@ -49,7 +50,7 @@ export default function KitchenToolsPage() {
   }, [location.pathname])
 
   return (
-    <div style={{ width: '100%', minHeight: '100vh', background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)', padding: '60px 20px' }}>
+    <div style={{ width: '100%', minHeight: '100vh',  padding: '60px 20px' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <h1 style={{ color: '#1a1a1a', fontSize: 'clamp(28px, 5vw, 44px)', fontWeight: 900, letterSpacing: '-0.5px', margin: 0 }}>
@@ -164,6 +165,7 @@ export default function KitchenToolsPage() {
           </div>
         </div>
       )}
+      <BackFloatButton label="Back" />
     </div>
   )
 }

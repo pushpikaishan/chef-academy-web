@@ -21,9 +21,7 @@ export default function Allusers() {
 			<h2 style={{ marginBottom: 12 }}>Management Overview</h2>
 
 			<div style={{ marginBottom: 16 }}>
-				<button onClick={goOverview} style={{ padding: '8px 12px' }}>
-					Overview
-				</button>
+			
 	
 			</div>
 
