@@ -12,6 +12,16 @@ export default function AdminHeader(){
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  // Fix scrollbar shift - use class instead of inline styles
+  useEffect(() => {
+    if (isMobile && mobileMenuOpen) {
+      document.body.classList.add('menu-open')
+    } else {
+      document.body.classList.remove('menu-open')
+    }
+    return () => { document.body.classList.remove('menu-open') }
+  }, [isMobile, mobileMenuOpen])
+
   const isActive = (path) => pathname === path
 
   return (
@@ -126,23 +136,147 @@ export default function AdminHeader(){
       </div>
 
       {isMobile && mobileMenuOpen && (
-        <div style={{
-          background: 'linear-gradient(to bottom, #1f2937, rgba(0, 0, 0, 0.9))',
-          padding: '16px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
-          marginTop: '12px'
-        }}>
-          <Link to="/" style={{ color: '#111827', background: 'linear-gradient(to right, #93c5fd, #60a5fa)', padding: '8px 12px', borderRadius: '6px', textDecoration: 'none' }} onClick={() => setMobileMenuOpen(false)}>View Site</Link>
-          <Link to="/admin" style={{ color: '#e5e7eb', textDecoration: 'none' }} onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
-          <Link to="/admin/users" style={{ color: '#e5e7eb', textDecoration: 'none' }} onClick={() => setMobileMenuOpen(false)}>Users</Link>
-          <Link to="/admin/recipes" style={{ color: '#e5e7eb', textDecoration: 'none' }} onClick={() => setMobileMenuOpen(false)}>Recipes</Link>
-          <Link to="/admin/tools" style={{ color: '#e5e7eb', textDecoration: 'none' }} onClick={() => setMobileMenuOpen(false)}>Tools</Link>
-          <Link to="/admin/theories" style={{ color: '#e5e7eb', textDecoration: 'none' }} onClick={() => setMobileMenuOpen(false)}>Theories</Link>
-          <Link to="/admin/questions" style={{ color: '#e5e7eb', textDecoration: 'none' }} onClick={() => setMobileMenuOpen(false)}>Questions</Link>
-          <Link to="/admin/profile" style={{ color: '#111827', background: 'linear-gradient(to right, #fbbf24, #f59e0b)', padding: '8px 12px', borderRadius: '6px', textDecoration: 'none' }} onClick={() => setMobileMenuOpen(false)}>Admin Profile</Link>
-        </div>
+        <>
+          {/* Backdrop */}
+          <div
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 999,
+              backgroundColor: 'rgba(0, 0, 0, 0.3)',
+            }}
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          
+          {/* Mobile Menu */}
+          <div style={{
+            position: 'fixed',
+            left: 0,
+            right: 0,
+            top: '56px',
+            maxHeight: 'calc(100vh - 56px)',
+            overflowY: 'auto',
+            zIndex: 1100,
+            background: 'linear-gradient(to bottom, #1f2937, rgba(0, 0, 0, 0.9))',
+            padding: '16px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+            borderTop: '1px solid rgba(251, 191, 36, 0.1)',
+            boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 20px 40px rgba(0, 0, 0, 0.3)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)'
+          }}>
+            <Link 
+              to="/" 
+              style={{ 
+                color: '#111827', 
+                background: 'linear-gradient(to right, #93c5fd, #60a5fa)', 
+                padding: '8px 12px', 
+                borderRadius: '6px', 
+                textDecoration: 'none',
+                fontWeight: '500'
+              }} 
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              View Site
+            </Link>
+            <Link 
+              to="/admin" 
+              style={{ 
+                color: isActive('/admin') ? '#fbbf24' : '#e5e7eb', 
+                textDecoration: 'none',
+                padding: '8px 0',
+                fontSize: '14px',
+                fontWeight: '500'
+              }} 
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Dashboard
+            </Link>
+            <Link 
+              to="/admin/users" 
+              style={{ 
+                color: isActive('/admin/users') ? '#fbbf24' : '#e5e7eb', 
+                textDecoration: 'none',
+                padding: '8px 0',
+                fontSize: '14px',
+                fontWeight: '500'
+              }} 
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Users
+            </Link>
+            <Link 
+              to="/admin/recipes" 
+              style={{ 
+                color: isActive('/admin/recipes') ? '#fbbf24' : '#e5e7eb', 
+                textDecoration: 'none',
+                padding: '8px 0',
+                fontSize: '14px',
+                fontWeight: '500'
+              }} 
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Recipes
+            </Link>
+            <Link 
+              to="/admin/tools" 
+              style={{ 
+                color: isActive('/admin/tools') ? '#fbbf24' : '#e5e7eb', 
+                textDecoration: 'none',
+                padding: '8px 0',
+                fontSize: '14px',
+                fontWeight: '500'
+              }} 
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Tools
+            </Link>
+            <Link 
+              to="/admin/theories" 
+              style={{ 
+                color: isActive('/admin/theories') ? '#fbbf24' : '#e5e7eb', 
+                textDecoration: 'none',
+                padding: '8px 0',
+                fontSize: '14px',
+                fontWeight: '500'
+              }} 
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Theories
+            </Link>
+            <Link 
+              to="/admin/questions" 
+              style={{ 
+                color: isActive('/admin/questions') ? '#fbbf24' : '#e5e7eb', 
+                textDecoration: 'none',
+                padding: '8px 0',
+                fontSize: '14px',
+                fontWeight: '500'
+              }} 
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Questions
+            </Link>
+            <Link 
+              to="/admin/profile" 
+              style={{ 
+                color: '#111827', 
+                background: 'linear-gradient(to right, #fbbf24, #f59e0b)', 
+                padding: '8px 12px', 
+                borderRadius: '6px', 
+                textDecoration: 'none',
+                fontWeight: 'bold',
+                textAlign: 'center',
+                marginTop: '8px'
+              }} 
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Admin Profile
+            </Link>
+          </div>
+        </>
       )}
     </nav>
   )

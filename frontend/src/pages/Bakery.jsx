@@ -2,20 +2,20 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import bakeryImg from '../assets/images/bakery.png'
 import { getCountsByDepartment } from '../services/statsService'
+import useAuth from '../hooks/useAuth'
+import AccessModal from '../components/common/AccessModal.jsx'
 
 export default function Bakery() {
   const [activeTab, setActiveTab] = useState(0)
   const [hoveredBtn, setHoveredBtn] = useState(null)
   const [counts, setCounts] = useState({ lessons: 0, recipes: 0, theories: 0 })
+  const [showAccessModal, setShowAccessModal] = useState(false)
   const navigate = useNavigate()
+  const { user } = useAuth() || {}
+  const isLoggedIn = !!(user || localStorage.getItem('token'))
 
   const tabs = [
-    { 
-      title: 'Video Lessons', 
-      desc: 'Learn baking with step-by-step videos',
-      icon: '🎥',
-      content: 'Explore pro-led baking videos covering doughs, pastries, cakes, and more.'
-    },
+    
     { 
       title: 'Recipes', 
       desc: 'Curated bakery recipes for all levels',
@@ -33,6 +33,12 @@ export default function Bakery() {
       desc: 'Foundations and baking science',
       icon: '🧪',
       content: 'Master the fundamentals of baking science: gluten, fermentation, lamination, and more.'
+    },
+    { 
+      title: 'Video Lessons', 
+      desc: 'Learn baking with step-by-step videos',
+      icon: '🎥',
+      content: 'Explore pro-led baking videos covering doughs, pastries, cakes, and more.'
     }
   ]
 
@@ -53,8 +59,10 @@ export default function Bakery() {
     return () => { mounted = false }
   }, [])
 
+  const isExploreDisabled = !isLoggedIn && activeTab === 3
+
   return (
-    <div style={{
+    <div className="dept-page dept-bakery" style={{
       width: '100%',
       minHeight: '100vh',
       //background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)',
@@ -250,22 +258,31 @@ export default function Bakery() {
                   borderRadius: '10px',
                   fontSize: '14px',
                   fontWeight: '700',
-                  cursor: 'pointer',
+                  cursor: isExploreDisabled ? 'not-allowed' : 'pointer',
                   transition: 'all 0.3s ease',
                   textTransform: 'uppercase',
                   letterSpacing: '1px',
-                  boxShadow: '0 8px 24px rgba(255,215,0,0.3)',
-                  textDecoration: 'none'
+                  boxShadow: isExploreDisabled ? '0 4px 14px rgba(0,0,0,0.1)' : '0 8px 24px rgba(255,215,0,0.3)',
+                  textDecoration: 'none',
+                  opacity: isExploreDisabled ? 0.7 : 1,
+                  filter: isExploreDisabled ? 'grayscale(20%)' : 'none'
                 }}
                 onMouseEnter={(e) => {
+                  if (isExploreDisabled) return
                   e.currentTarget.style.transform = 'translateY(-3px)'
                   e.currentTarget.style.boxShadow = '0 12px 36px rgba(255,215,0,0.5)'
                 }}
                 onMouseLeave={(e) => {
+                  if (isExploreDisabled) return
                   e.currentTarget.style.transform = 'translateY(0)'
                   e.currentTarget.style.boxShadow = '0 8px 24px rgba(255,215,0,0.3)'
                 }}
                 onClick={() => {
+                  if (isExploreDisabled) {
+                    localStorage.setItem('nudgeRegister', '1')
+                    setShowAccessModal(true)
+                    return
+                  }
                   // Video Lessons tab → Bakery Lessons listing
                   if (activeTab === 0) {
                     navigate('/lessons?department=Bakery')
@@ -286,6 +303,18 @@ export default function Bakery() {
                 }}>
                   Explore Now
                 </button>
+
+                {/* Access Modal */}
+                <AccessModal
+                  open={showAccessModal}
+                  title="Access Restricted"
+                  message="Please register or log in to access Video Lessons."
+                  onClose={() => setShowAccessModal(false)}
+                  onPrimary={() => {
+                    setShowAccessModal(false)
+                    navigate('/register')
+                  }}
+                />
 
                 <button style={{
                   padding: '14px 32px',
@@ -382,23 +411,25 @@ export default function Bakery() {
         }
 
         @media (max-width: 768px) {
-          div {
+          /* Only collapse the main two-column content grid */
+          .dept-bakery div[style*="gridTemplateColumns: '1fr 1fr'"] {
             grid-template-columns: 1fr !important;
           }
 
-          div[style*="gridTemplateColumns: '1fr 1fr'"] {
+          /* Only collapse the bottom stats grid */
+          .dept-bakery div[style*="gridTemplateColumns: 'repeat(3, 1fr)'"] {
             grid-template-columns: 1fr !important;
           }
 
-          img {
+          .dept-bakery img {
             min-height: 300px !important;
           }
 
-          div[style*="padding: '60px 48px'"] {
+          .dept-bakery div[style*="padding: '60px 48px'"] {
             padding: 32px 20px !important;
           }
 
-          h2 {
+          .dept-bakery h2 {
             font-size: 24px !important;
           }
         }

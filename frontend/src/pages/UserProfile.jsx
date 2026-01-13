@@ -40,7 +40,7 @@ export default function UserProfile(){
   const handleLogout = () => {
     localStorage.removeItem('id')
     localStorage.removeItem('token')
-    window.location.href = '/login'
+    window.location.href = '/'
   }
 
   const handleEditOpen = () => {

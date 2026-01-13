@@ -2,20 +2,20 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import kitchenImg from '../assets/images/kitchen.png'
 import { getCountsByDepartment } from '../services/statsService'
+import useAuth from '../hooks/useAuth'
+import AccessModal from '../components/common/AccessModal.jsx'
 
 export default function Kitchen() {
   const [activeTab, setActiveTab] = useState(0)
   const [hoveredBtn, setHoveredBtn] = useState(null)
   const [counts, setCounts] = useState({ lessons: 0, recipes: 0, theories: 0 })
+  const [showAccessModal, setShowAccessModal] = useState(false)
   const navigate = useNavigate()
+  const { user } = useAuth() || {}
+  const isLoggedIn = !!(user || localStorage.getItem('token'))
 
   const tabs = [
-    { 
-      title: 'Video Lessons', 
-      desc: 'Learn techniques with step-by-step videos',
-      icon: '🎥',
-      content: 'Explore our comprehensive video library with professional chefs guiding you through every step.'
-    },
+    
     { 
       title: 'Recipes', 
       desc: 'Curated recipes for all levels',
@@ -33,6 +33,12 @@ export default function Kitchen() {
       desc: 'Foundations and cooking science',
       icon: '🧪',
       content: 'Master the fundamentals of cooking science and culinary principles.'
+    },
+    { 
+      title: 'Video Lessons', 
+      desc: 'Learn techniques with step-by-step videos',
+      icon: '🎥',
+      content: 'Explore our comprehensive video library with professional chefs guiding you through every step.'
     }
   ]
 
@@ -53,14 +59,13 @@ export default function Kitchen() {
     return () => { mounted = false }
   }, [])
 
+  const isExploreDisabled = !isLoggedIn && activeTab === 3
+
   return (
-    <div style={{
+    <div className="dept-page dept-kitchen" style={{
       width: '100%',
       minHeight: '100vh',
-      //background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)',
-      //padding: '1px 10px',
       marginTop: '0px',
-
     }}>
       <div style={{
         maxWidth: '1200px',
@@ -251,42 +256,63 @@ export default function Kitchen() {
                   borderRadius: '10px',
                   fontSize: '14px',
                   fontWeight: '700',
-                  cursor: 'pointer',
+                  cursor: isExploreDisabled ? 'not-allowed' : 'pointer',
                   transition: 'all 0.3s ease',
                   textTransform: 'uppercase',
                   letterSpacing: '1px',
-                  boxShadow: '0 8px 24px rgba(255,215,0,0.3)',
-                  textDecoration: 'none'
+                  boxShadow: isExploreDisabled ? '0 4px 14px rgba(0,0,0,0.1)' : '0 8px 24px rgba(255,215,0,0.3)',
+                  textDecoration: 'none',
+                  opacity: isExploreDisabled ? 0.7 : 1,
+                  filter: isExploreDisabled ? 'grayscale(20%)' : 'none'
                 }}
                 onMouseEnter={(e) => {
+                  if (isExploreDisabled) return
                   e.currentTarget.style.transform = 'translateY(-3px)'
                   e.currentTarget.style.boxShadow = '0 12px 36px rgba(255,215,0,0.5)'
                 }}
                 onMouseLeave={(e) => {
+                  if (isExploreDisabled) return
                   e.currentTarget.style.transform = 'translateY(0)'
                   e.currentTarget.style.boxShadow = '0 8px 24px rgba(255,215,0,0.3)'
                 }}
                 onClick={() => {
+                  if (isExploreDisabled) {
+                    localStorage.setItem('nudgeRegister', '1')
+                    setShowAccessModal(true)
+                    return
+                  }
                   // Video Lessons tab → Kitchen Lessons listing
                   if (activeTab === 0) {
                     navigate('/lessons?department=Kitchen')
                     return
                   }
-                  // When on the Recipes tab, go to Kitchen Recipes listing
+                  // Recipes tab → Kitchen Recipes listing
                   if (activeTab === 1) {
                     navigate('/kitchen/recipes')
                   }
-                  // When on the Equipments tab, go to Kitchen Tools listing
+                  // Equipments tab → Kitchen Tools listing
                   if (activeTab === 2) {
                     navigate('/kitchen/tools')
                   }
-                  // When on the Basic Theory tab, go to Kitchen Theories listing
+                  // Basic Theory tab → Kitchen Theory listing
                   if (activeTab === 3) {
                     navigate('/kitchen/theories')
                   }
                 }}>
                   Explore Now
                 </button>
+
+                {/* Access Modal */}
+                <AccessModal
+                  open={showAccessModal}
+                  title="Access Restricted"
+                  message="Please register or log in to access Video Lessons."
+                  onClose={() => setShowAccessModal(false)}
+                  onPrimary={() => {
+                    setShowAccessModal(false)
+                    navigate('/register')
+                  }}
+                />
 
                 <button style={{
                   padding: '14px 32px',
@@ -383,23 +409,25 @@ export default function Kitchen() {
         }
 
         @media (max-width: 768px) {
-          div {
+          /* Only collapse the main two-column content grid */
+          .dept-kitchen div[style*="gridTemplateColumns: '1fr 1fr'"] {
             grid-template-columns: 1fr !important;
           }
 
-          div[style*="gridTemplateColumns: '1fr 1fr'"] {
+          /* Only collapse the bottom stats grid */
+          .dept-kitchen div[style*="gridTemplateColumns: 'repeat(3, 1fr)'"] {
             grid-template-columns: 1fr !important;
           }
 
-          img {
+          .dept-kitchen img {
             min-height: 300px !important;
           }
 
-          div[style*="padding: '60px 48px'"] {
+          .dept-kitchen div[style*="padding: '60px 48px'"] {
             padding: 32px 20px !important;
           }
 
-          h2 {
+          .dept-kitchen h2 {
             font-size: 24px !important;
           }
         }
