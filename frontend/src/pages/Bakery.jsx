@@ -284,20 +284,20 @@ export default function Bakery() {
                     return
                   }
                   // Video Lessons tab → Bakery Lessons listing
-                  if (activeTab === 0) {
+                  if (activeTab === 3) {
                     navigate('/lessons?department=Bakery')
                     return
                   }
                   // Recipes tab → Bakery Recipes listing
-                  if (activeTab === 1) {
+                  if (activeTab === 0) {
                     navigate('/bakery/recipes')
                   }
                   // Equipments tab → Bakery Tools listing
-                  if (activeTab === 2) {
+                  if (activeTab === 1) {
                     navigate('/bakery/tools')
                   }
                   // Basic Theory tab → Bakery Theory listing
-                  if (activeTab === 3) {
+                  if (activeTab === 2) {
                     navigate('/bakery/theories')
                   }
                 }}>

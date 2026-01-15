@@ -284,20 +284,20 @@ export default function Butchry() {
                     return
                   }
                   // Video Lessons tab → Butchery Lessons listing
-                  if (activeTab === 0) {
+                  if (activeTab === 3) {
                     navigate('/lessons?department=Butchery')
                     return
                   }
                   // Recipes tab → Butchry Recipes listing
-                  if (activeTab === 1) {
+                  if (activeTab === 0) {
                     navigate('/butchry/recipes')
                   }
                   // Equipments tab → Butchry Tools listing
-                  if (activeTab === 2) {
+                  if (activeTab === 1) {
                     navigate('/butchry/tools')
                   }
                   // Basic Theory tab → Butchry Theory listing
-                  if (activeTab === 3) {
+                  if (activeTab === 2) {
                     navigate('/butchry/theories')
                   }
                 }}>

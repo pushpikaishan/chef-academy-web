@@ -282,20 +282,20 @@ export default function Kitchen() {
                     return
                   }
                   // Video Lessons tab → Kitchen Lessons listing
-                  if (activeTab === 0) {
+                  if (activeTab === 3) {
                     navigate('/lessons?department=Kitchen')
                     return
                   }
                   // Recipes tab → Kitchen Recipes listing
-                  if (activeTab === 1) {
+                  if (activeTab === 0) {
                     navigate('/kitchen/recipes')
                   }
                   // Equipments tab → Kitchen Tools listing
-                  if (activeTab === 2) {
+                  if (activeTab === 1) {
                     navigate('/kitchen/tools')
                   }
                   // Basic Theory tab → Kitchen Theory listing
-                  if (activeTab === 3) {
+                  if (activeTab === 2) {
                     navigate('/kitchen/theories')
                   }
                 }}>
