@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import BackFloatButton from '../components/common/BackFloatButton'
+import Loader from '../components/common/Loader.jsx'
 import { getAllRecipes } from '../services/recipeService'
 
 export default function KitchenRecipesPage() {
@@ -76,7 +77,7 @@ export default function KitchenRecipesPage() {
         {error && <div style={{ color: 'crimson', marginBottom: 16 }}>{error}</div>}
 
         {loading ? (
-          <div>Loading…</div>
+          <Loader />
         ) : recipes.length === 0 ? (
           <div>No Kitchen recipes found.</div>
         ) : (

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import Loader from '../components/common/Loader.jsx'
 import BackFloatButton from '../components/common/BackFloatButton'
 import { getAllTheories } from '../services/theoryService'
 
@@ -68,7 +69,7 @@ export default function KitchenTheoriesPage() {
         {error && <div style={{ color: 'crimson', marginBottom: 16 }}>{error}</div>}
 
         {loading ? (
-          <div>Loading…</div>
+             <Loader />
         ) : items.length === 0 ? (
           <div>No Kitchen theory found.</div>
         ) : (

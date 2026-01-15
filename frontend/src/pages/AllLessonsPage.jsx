@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import dhatImg from '../assets/images/dhat.png'
 import { useLocation } from 'react-router-dom'
+import Loader from '../components/common/Loader.jsx'
 import { getAllLessonVideos } from '../services/lessonVideoService'
 import VideoPlayer from '../components/common/VideoPlayer'
 import BackFloatButton from '../components/common/BackFloatButton'
@@ -88,7 +89,7 @@ export default function AllLessonsPage(){
         {error && <div style={{ color: 'crimson', marginBottom: 16 }}>{error}</div>}
 
         {loading ? (
-          <div>Loading…</div>
+             <Loader />
         ) : filtered.length === 0 ? (
           <div>No lessons found{requestedDept ? ` for ${requestedDept}` : ''}.</div>
         ) : (

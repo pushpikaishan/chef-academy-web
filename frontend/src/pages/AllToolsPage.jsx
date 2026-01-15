@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import Loader from '../components/common/Loader.jsx'
 import BackFloatButton from '../components/common/BackFloatButton'
 import { getAllTools } from '../services/toolService'
 
@@ -62,7 +63,7 @@ export default function KitchenToolsPage() {
         {error && <div style={{ color: 'crimson', marginBottom: 16 }}>{error}</div>}
 
         {loading ? (
-          <div>Loading…</div>
+             <Loader />
         ) : tools.length === 0 ? (
           <div>No {getDeptFromPath()} tools found.</div>
         ) : (
