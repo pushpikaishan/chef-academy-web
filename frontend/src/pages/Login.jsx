@@ -201,16 +201,19 @@ export default function Login(){
             <div style={{ 
               width: '120px', 
               height: '120px', 
-              background: 'linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%)', 
+              background: 'rgba(87, 86, 86, 0.22)', 
               borderRadius: '50%', 
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center', 
               boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)', 
-              fontSize: '70px',
               marginBottom: '20px'
             }}>
-              👨‍🍳
+              <img 
+                src={appIcon} 
+                alt="App Icon" 
+                style={{ width: '80px', height: '80px', borderRadius: '16px', objectFit: 'contain', filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.25))' }}
+              />
             </div>
             <h1 style={{ 
               fontSize: '36px', 
@@ -220,7 +223,7 @@ export default function Login(){
               letterSpacing: '1px',
               margin: '0 0 10px 0'
             }}>
-              Master Chef
+              Chef Academy
             </h1>
           </div>
         )}
@@ -352,7 +355,7 @@ export default function Login(){
                     onMouseEnter={(e) => e.target.style.transform = 'scale(1.2)'}
                     onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
                   >
-                    {showPassword ? '👁️' : '👁️‍🗨️'}
+                    {showPassword ? '👁️' : '👁️'}
                   </button>
                 </div>
               </div>
