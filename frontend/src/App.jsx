@@ -6,6 +6,7 @@ import AdminHeader from './components/common/AdminHeader'
 import Footer from './components/common/Footer'
 import './styles/main.css'
 
+
 function AppShell() {
   const location = useLocation()
   const chromeHiddenPaths = ['/login', '/register']
