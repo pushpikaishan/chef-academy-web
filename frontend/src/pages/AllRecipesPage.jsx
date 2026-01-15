@@ -68,10 +68,12 @@ export default function KitchenRecipesPage() {
     <div style={{ width: '100%', minHeight: '100vh',  padding: '0 10px 24px' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <h1 style={{ color: '#1a1a1a', fontSize: 'clamp(28px, 5vw, 44px)', fontWeight: 900, letterSpacing: '-0.5px', margin: 0 }}>
+          <h1 style={{ background: 'linear-gradient(90deg, #FFD700 0%, #FFA500 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent', fontSize: 'clamp(28px, 5vw, 44px)', fontWeight: 900, letterSpacing: '-0.5px', margin: 0 }}>
             {pathDept()} Recipes
           </h1>
-          <p style={{ color: '#666', marginTop: 8 }}>Showing all recipes in the {pathDept()} department</p>
+          <p style={{ color: '#fff', marginTop: 8 }}>Showing all recipes in the {pathDept()} department</p>
         </div>
 
         {error && <div style={{ color: 'crimson', marginBottom: 16 }}>{error}</div>}

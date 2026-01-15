@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { BrowserRouter, useLocation } from 'react-router-dom'
 import AppRoutes from './routes/AppRoutes'
 import { AuthProvider } from './context/AuthContext'
@@ -13,6 +14,16 @@ function AppShell() {
   const adminPrefixes = ['/admin', '/allusers']
   const isAdminRoute = adminPrefixes.some(prefix => location.pathname.startsWith(prefix))
   const hideChrome = chromeHiddenPaths.includes(location.pathname)
+
+  useEffect(() => {
+    const body = document.body
+    if (isAdminRoute) {
+      body.classList.add('admin-mode')
+    } else {
+      body.classList.remove('admin-mode')
+    }
+    return () => body.classList.remove('admin-mode')
+  }, [isAdminRoute])
 
   return (
     <AuthProvider>

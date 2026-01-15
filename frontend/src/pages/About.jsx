@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ChefHat, Users, Award, Lightbulb, ArrowRight } from 'lucide-react'
 import { getGlobalCounts } from '../services/statsService'
 
 export default function About() {
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024)
   const [counts, setCounts] = useState({ users: 0, recipes: 0, lessons: 0 })
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth)
@@ -121,7 +123,7 @@ export default function About() {
 
           <p style={{
             fontSize: isMobile ? '14px' : isTablet ? '16px' : '18px',
-            color: '#666',
+            color: '#959595',
             lineHeight: '1.7',
             marginBottom: '24px'
           }}>
@@ -202,7 +204,9 @@ export default function About() {
           <h2 style={{
             fontSize: isMobile ? '28px' : isTablet ? '40px' : '48px',
             fontWeight: '900',
-            color: '#1a1a1a',
+            background: 'linear-gradient(90deg, #FFD700 0%, #FFA500 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
             marginBottom: isMobile ? '24px' : '48px',
             textAlign: 'center'
           }}>
@@ -291,7 +295,9 @@ export default function About() {
           <h3 style={{
             fontSize: isMobile ? '20px' : isTablet ? '28px' : '36px',
             fontWeight: '900',
-            color: '#1a1a1a',
+            background: 'linear-gradient(90deg, #FFD700 0%, #FFA500 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
             marginBottom: '16px'
           }}>
             Ready to Master Your Culinary Skills?
@@ -299,42 +305,44 @@ export default function About() {
 
           <p style={{
             fontSize: isMobile ? '13px' : isTablet ? '15px' : '16px',
-            color: '#666',
+            color: '#a1a0a0',
             marginBottom: '24px',
             lineHeight: '1.6'
           }}>
             Join thousands of students and start your journey with Chef Academy today. Learn from industry experts and elevate your cooking skills to the next level.
           </p>
 
-          <button style={{
-            padding: isMobile ? '10px 20px' : '12px 32px',
-            background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '10px',
-            fontSize: isMobile ? '13px' : '15px',
-            fontWeight: '700',
-            cursor: 'pointer',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            boxShadow: '0 6px 20px rgba(255,215,0,0.3)',
-            transition: 'all 0.3s ease',
-            textTransform: 'uppercase',
-            letterSpacing: '0.5px'
-          }}
-          onMouseEnter={(e) => {
-            if (!isMobile) {
-              e.currentTarget.style.transform = 'translateY(-2px)'
-              e.currentTarget.style.boxShadow = '0 10px 28px rgba(255,215,0,0.4)'
-            }
-          }}
-          onMouseLeave={(e) => {
-            if (!isMobile) {
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = '0 6px 20px rgba(255,215,0,0.3)'
-            }
-          }}
+          <button
+            style={{
+              padding: isMobile ? '10px 20px' : '12px 32px',
+              background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '10px',
+              fontSize: isMobile ? '13px' : '15px',
+              fontWeight: '700',
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: '0 6px 20px rgba(255,215,0,0.3)',
+              transition: 'all 0.3s ease',
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
+            }}
+            onClick={() => navigate('/')}
+            onMouseEnter={(e) => {
+              if (!isMobile) {
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 10px 28px rgba(255,215,0,0.4)'
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isMobile) {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(255,215,0,0.3)'
+              }
+            }}
           >
             Get Started Today
             <ArrowRight size={isMobile ? 14 : 16} />

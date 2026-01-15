@@ -78,7 +78,9 @@ export default function Kitchen() {
           animation: 'slideDown 1s ease-out'
         }}>
           <h1 style={{
-            color: '#1a1a1a',
+            background: 'linear-gradient(90deg, #FFD700 0%, #FFA500 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
             fontSize: 'clamp(32px, 6vw, 56px)',
             fontWeight: '900',
             marginBottom: '1px',
@@ -87,7 +89,7 @@ export default function Kitchen() {
             Kitchen Learning Hub
           </h1>
           <p style={{
-            color: '#666',
+            color: '#fff',
             fontSize: '16px',
             maxWidth: '600px',
             margin: '0 auto',

@@ -101,7 +101,7 @@ export default function Contact() {
             </h1>
             <p style={{
               fontSize: isMobile ? '14px' : isTablet ? '16px' : '18px',
-              color: '#666',
+              color: '#fff',
               lineHeight: '1.6'
             }}>
               Have questions? We'd love to hear from you. Reach out today!
@@ -112,8 +112,8 @@ export default function Contact() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {[
               { icon: Mail, title: 'Email', content: 'contact@chef.academy' },
-              { icon: Phone, title: 'Phone', content: '+1 (555) 123-4567' },
-              { icon: MapPin, title: 'Location', content: 'Culinary District, Chef City' }
+              { icon: Phone, title: 'Phone', content: '+94 (77) 422-8746' },
+              { icon: MapPin, title: 'Location', content: 'Malabe, Colombo' }
             ].map((item, idx) => {
               const Icon = item.icon
               return (
@@ -210,7 +210,7 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  placeholder="John Doe"
+                  placeholder="pushpika Ishan"
                   style={{
                     width: '100%',
                     padding: isMobile ? '10px 12px' : '12px 16px',
@@ -246,7 +246,7 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  placeholder="john@example.com"
+                  placeholder="losa@example.com"
                   style={{
                     width: '100%',
                     padding: isMobile ? '10px 12px' : '12px 16px',

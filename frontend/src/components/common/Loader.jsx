@@ -7,7 +7,7 @@ export default function Loader(){
       alignItems: 'center',
       flexDirection: 'column',
       height: '100vh',
-      background: '#f5f5f5'
+      
     }}>
       <style>{`
         @keyframes spin {
@@ -17,6 +17,7 @@ export default function Loader(){
         
         .spinner {
           animation: spin 2s linear infinite;
+          filter: drop-shadow(0 0 8px #FFD700) drop-shadow(0 0 16px rgba(255, 165, 0, 0.6));
         }
         @keyframes labelPulse {
           0%, 100% { opacity: 0.75; }
@@ -35,15 +36,46 @@ export default function Loader(){
           background: currentColor;
           animation: blink 1.2s infinite;
         }
+        
+        @media (max-width: 768px) {
+          .spinner-container {
+            width: 80px;
+            height: 80px;
+          }
+          
+          .spinner-circle {
+            width: 80px;
+            height: 80px;
+            border: 4px solid #f0f0f0;
+            border-top: 4px solid #FFD700;
+            border-right: 4px solid #FFA500;
+          }
+          
+          .app-icon {
+            width: 50px;
+            height: 50px;
+          }
+          
+          .loading-label {
+            font-size: 12px;
+            margin-top: 10px;
+          }
+          
+          .dot {
+            width: 4px;
+            height: 4px;
+            margin-left: 4px;
+          }
+        }
       `}</style>
       
-      <div style={{
+      <div className="spinner-container" style={{
         position: 'relative',
         width: '120px',
         height: '120px'
       }}>
-        {/* Orange-yellow spinner circle */}
-        <div style={{
+        {/* Orange-yellow spinner circle with glow */}
+        <div className="spinner-circle spinner" style={{
           position: 'absolute',
           width: '120px',
           height: '120px',
@@ -51,12 +83,13 @@ export default function Loader(){
           borderTop: '6px solid #FFD700',
           borderRight: '6px solid #FFA500',
           borderRadius: '50%'
-        }} className="spinner"></div>
+        }}></div>
         
         {/* App icon in center */}
         <img
           src={appIcon}
           alt="App Icon"
+          className="app-icon"
           style={{
             position: 'absolute',
             width: '80px',
@@ -70,9 +103,9 @@ export default function Loader(){
       </div>
 
       {/* Loading label below spinner */}
-      <p style={{
+      <p className="loading-label" style={{
         marginTop: '14px',
-        color: '#b45309',
+        color: '#FFD700',
         fontSize: '14px',
         fontWeight: 700,
         letterSpacing: '0.5px',
