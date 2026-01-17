@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getAllTools } from '../services/toolService'
+import Loader from '../components/common/Loader.jsx'
 
 export default function Tools(){
   const [tools, setTools] = useState([])
@@ -24,7 +25,7 @@ export default function Tools(){
     })()
   }, [])
 
-  if (loading) return <div>Loading...</div>
+  if (loading) return <Loader />
   if (error) return <div style={{color:'crimson'}}>{error}</div>
 
   return (

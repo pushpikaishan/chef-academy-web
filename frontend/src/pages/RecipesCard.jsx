@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import BackFloatButton from '../components/common/BackFloatButton'
+import Loader from '../components/common/Loader.jsx'
 import { getRecipeById, likeRecipe, unlikeRecipe } from '../services/recipeService'
 
 export default function KitchenRecipes(){
@@ -89,14 +90,7 @@ export default function KitchenRecipes(){
 				)}
 
 				{loading ? (
-					<div style={{
-						textAlign: 'center',
-						padding: '60px 20px',
-						fontSize: '16px',
-						color: '#999'
-					}}>
-						Loading recipe...
-					</div>
+					<Loader />
 				) : !item ? (
 					<div style={{
 						textAlign: 'center',

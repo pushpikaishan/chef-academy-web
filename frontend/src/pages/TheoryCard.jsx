@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import BackFloatButton from '../components/common/BackFloatButton'
+import Loader from '../components/common/Loader.jsx'
 import { getTheoryById } from '../services/theoryService'
 
 export default function KitchenTheory() {
@@ -45,7 +46,7 @@ export default function KitchenTheory() {
         </div>
         {error && <div style={{ color: 'crimson', marginBottom: 16 }}>{error}</div>}
         {loading ? (
-          <div>Loading…</div>
+          <Loader />
         ) : !item ? (
           <div>Not found.</div>
         ) : (

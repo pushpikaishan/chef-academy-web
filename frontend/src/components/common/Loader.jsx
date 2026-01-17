@@ -6,7 +6,7 @@ export default function Loader(){
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'column',
-      height: '100vh',
+      height: '50vh',
       
     }}>
       <style>{`
