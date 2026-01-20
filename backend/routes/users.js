@@ -17,7 +17,6 @@ router.get('/:id', getUserById);
 router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);
 router.patch('/:id/photo', upload.single('photo'), updateUserPhoto);
-router.post('/:id/photo', upload.single('photo'), updateUserPhoto);
 router.patch('/:id/watch', updateWatchStats);
 
 module.exports = router;
