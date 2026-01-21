@@ -8,7 +8,7 @@ export async function register(payload){
 export async function updateUserPhoto(userId, file){
   const form = new FormData()
   form.append('photo', file)
-  const { data } = await api.post(`/users/${userId}/photo`, form, {
+  const { data } = await api.patch(`/users/${userId}/photo`, form, {
     headers: { 'Content-Type': 'multipart/form-data' }
   })
   return data
@@ -39,7 +39,7 @@ export async function deleteUser(id){
   return data
 }
 
-export async function updateUserWatch(userId, department){
-  const { data } = await api.patch(`/users/${userId}/watch`, { department })
+export async function updateUserWatch(userId, department, lessonVideoId){
+  const { data } = await api.patch(`/users/${userId}/watch`, { department, lessonVideoId })
   return data
 }

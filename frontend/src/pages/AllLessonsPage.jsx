@@ -140,7 +140,14 @@ export default function AllLessonsPage(){
                         href={resolveSrc(item.video)}
                         target="_blank"
                         rel="noreferrer"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={async (e) => {
+                          e.stopPropagation();
+                          if (userId) {
+                            try {
+                              await updateUserWatch(userId, item.department || "", item._id);
+                            } catch (_) {}
+                          }
+                        }}
                         style={{ padding: '8px 12px', border: '1px solid #ddd', color: '#1a1a1a', borderRadius: 8, fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', background: '#fff' }}
                       >
                         Open Video
@@ -163,7 +170,7 @@ export default function AllLessonsPage(){
           onPlayed={async () => {
             if (!userId) return
             try {
-              await updateUserWatch(userId, playerItem.department || '' )
+              await updateUserWatch(userId, playerItem.department || '', playerItem._id)
             } catch (_) {
               // ignore update errors in UI
             }

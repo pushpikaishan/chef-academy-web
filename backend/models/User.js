@@ -13,6 +13,12 @@ const userSchema = new Schema({
         bakery: { type: Number, default: 0 },
         butchery: { type: Number, default: 0 },
         total: { type: Number, default: 0 },
+        watched: {
+            kitchen: [{ type: Schema.Types.ObjectId, ref: 'lessonvideo' }],
+            bakery: [{ type: Schema.Types.ObjectId, ref: 'lessonvideo' }],
+            butchery: [{ type: Schema.Types.ObjectId, ref: 'lessonvideo' }],
+            all: [{ type: Schema.Types.ObjectId, ref: 'lessonvideo' }],
+        }
     }
 
 });

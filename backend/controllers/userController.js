@@ -135,21 +135,46 @@ exports.updateWatchStats = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: 'Invalid id' });
     }
-    const { department } = req.body || {};
+    const { department, lessonVideoId } = req.body || {};
     if (!department || typeof department !== 'string') {
       return res.status(400).json({ error: 'department is required' });
     }
+    if (!lessonVideoId || !mongoose.Types.ObjectId.isValid(lessonVideoId)) {
+      return res.status(400).json({ error: 'lessonVideoId is required' });
+    }
     const d = department.toLowerCase();
-    let field = null;
-    if (d.includes('kitchen')) field = 'watchStats.kitchen';
-    else if (d.includes('bakery')) field = 'watchStats.bakery';
-    else if (d.includes('butch')) field = 'watchStats.butchery';
+    let deptKey = null;
+    if (d.includes('kitchen')) deptKey = 'kitchen';
+    else if (d.includes('bakery')) deptKey = 'bakery';
+    else if (d.includes('butch')) deptKey = 'butchery';
     else return res.status(400).json({ error: 'Unknown department' });
 
-    const inc = { [field]: 1, 'watchStats.total': 1 };
-    const user = await User.findByIdAndUpdate(id, { $inc: inc }, { new: true });
+    const user = await User.findById(id);
     if (!user) return res.status(404).json({ error: 'Not found' });
-    const { password: _, ...safe } = user.toObject();
+
+    // Check if already watched
+    const watchedDept = user.watchStats?.watched?.[deptKey] || [];
+    const watchedAll = user.watchStats?.watched?.all || [];
+    const alreadyWatched = watchedDept.some(v => v.toString() === lessonVideoId) || watchedAll.some(v => v.toString() === lessonVideoId);
+    if (alreadyWatched) {
+      // No increment, just return user
+      const { password: _, ...safe } = user.toObject();
+      return res.json(safe);
+    }
+
+    // Add to watched arrays and increment counters
+    const update = {
+      $addToSet: {
+        [`watchStats.watched.${deptKey}`]: lessonVideoId,
+        'watchStats.watched.all': lessonVideoId
+      },
+      $inc: {
+        [`watchStats.${deptKey}`]: 1,
+        'watchStats.total': 1
+      }
+    };
+    const updatedUser = await User.findByIdAndUpdate(id, update, { new: true });
+    const { password: _, ...safe } = updatedUser.toObject();
     return res.json(safe);
   } catch (err) {
     return res.status(400).json({ error: err.message || 'Failed to update watch stats' });
