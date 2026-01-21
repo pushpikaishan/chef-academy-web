@@ -87,25 +87,46 @@ exports.deleteUser = async (req, res) => {
 exports.updateUserPhoto = async (req, res) => {
   try {
     const { id } = req.params;
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: 'Invalid id' });
     }
-    if (!req.file) {
-      return res.status(400).json({ error: 'No photo uploaded' });
+
+    let photoUrl = null;
+
+    // ✅ CASE 1: Multipart file upload (mobile/web)
+    if (req.file) {
+      photoUrl = `/uploads/${req.file.filename}`;
     }
-    const photoUrl = `/uploads/${req.file.filename}`;
+
+    // ✅ CASE 2: Image URL upload (JSON)
+    if (!photoUrl && req.body.profileImage) {
+      photoUrl = req.body.profileImage;
+    }
+
+    if (!photoUrl) {
+      return res.status(400).json({ error: 'No photo or image URL provided' });
+    }
+
     const user = await User.findByIdAndUpdate(
       id,
       { profileImage: photoUrl },
       { new: true }
     );
-    if (!user) return res.status(404).json({ error: 'Not found' });
+
+    if (!user) {
+      return res.status(404).json({ error: 'Not found' });
+    }
+
     const { password: _, ...safe } = user.toObject();
     return res.json(safe);
+
   } catch (err) {
+    console.error('updateUserPhoto error:', err);
     return res.status(400).json({ error: err.message || 'Failed to update photo' });
   }
 };
+
 
 // Increment watch stats for a user by department
 exports.updateWatchStats = async (req, res) => {
