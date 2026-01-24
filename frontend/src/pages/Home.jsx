@@ -16,7 +16,7 @@ export default function Home(){
   const autoDirectionRef = useRef(1) // 1: right, -1: left
   const isScrollerHoveredRef = useRef(false)
   const navigate = useNavigate()
-  const APP_DOWNLOAD_URL = 'https://example.com/chef-academy-app'
+  const APP_DOWNLOAD_URL = '/apk/ChefAcademy.apk'
   const FULL_TAGLINE = ' Build professional skills in bakery, butchery, and kitchen operations through hands-on training, modern tools, and expert recipes.'
   const [typedTagline, setTypedTagline] = useState('')
   const [typingDone, setTypingDone] = useState(false)
@@ -560,9 +560,10 @@ export default function Home(){
           marginTop: '85px',
           gridColumn: '1 / -1'
         }}>
-          <button
+          <a
+            href={APP_DOWNLOAD_URL}
+            download
             aria-label="Download Chef Academy App"
-            onClick={() => window.open(APP_DOWNLOAD_URL, '_blank', 'noopener,noreferrer')}
             style={{
               background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
               color: '#000',
@@ -593,7 +594,7 @@ export default function Home(){
               <path d="M12 3v10m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             <span>Download App</span>
-          </button>
+          </a>
         </div>
       </div>
 
