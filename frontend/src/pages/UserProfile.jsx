@@ -437,6 +437,64 @@ export default function UserProfile(){
                     )
                   })}
                 </div>
+                {/* Claim Certificate Button */}
+                <div style={{ marginTop: '32px', textAlign: 'center' }}>
+                  <button
+                    onClick={async () => {
+                      try {
+                        const response = await fetch(`${apiBase}/users/${userId}/certificate`, {
+                          method: 'GET',
+                          headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                          }
+                        });
+                        if (!response.ok) throw new Error('Failed to download certificate');
+                        const blob = await response.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'ChefAcademy_Certificate.pdf';
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+                        window.URL.revokeObjectURL(url);
+                      } catch (err) {
+                        alert(err.message || 'Certificate download failed');
+                      }
+                    }}
+                    style={{
+                      background: 'linear-gradient(90deg, #FFD700 0%, #FFA500 100%)',
+                      color: '#fff',
+                      fontWeight: 900,
+                      fontSize: '1.2rem',
+                      padding: '18px 38px',
+                      border: 'none',
+                      borderRadius: '16px',
+                      boxShadow: '0 8px 32px 0 rgba(255,215,0,0.18)',
+                      cursor: 'pointer',
+                      letterSpacing: '0.5px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '14px',
+                      transition: 'all 0.2s',
+                      position: 'relative',
+                      overflow: 'hidden',
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.background = 'linear-gradient(90deg, #FFA500 0%, #FFD700 100%)';
+                      e.currentTarget.style.boxShadow = '0 12px 36px 0 rgba(255,215,0,0.28)';
+                      e.currentTarget.style.transform = 'translateY(-2px) scale(1.04)';
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.background = 'linear-gradient(90deg, #FFD700 0%, #FFA500 100%)';
+                      e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(255,215,0,0.18)';
+                      e.currentTarget.style.transform = 'none';
+                    }}
+                  >
+                    <i className="fa-solid fa-award" style={{ fontSize: 22, color: '#fff', filter: 'drop-shadow(0 2px 8px #FFD700)' }}></i>
+                    Claim Certificate
+                  </button>
+                </div>
               </div>
             )}
           </div>

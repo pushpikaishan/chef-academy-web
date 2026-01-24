@@ -1,0 +1,11 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Install pdfkit for backend PDF generation",
+			"type": "shell",
+			"command": "npm install pdfkit",
+			"group": "build"
+		}
+	]
+}
