@@ -16,7 +16,7 @@ export default function Home(){
   const autoDirectionRef = useRef(1) // 1: right, -1: left
   const isScrollerHoveredRef = useRef(false)
   const navigate = useNavigate()
-  const APP_DOWNLOAD_URL = '/apk/ChefAcademy.apk'
+  const APP_DOWNLOAD_URL = 'https://drive.google.com/file/d/1y9VaWcAFeUuopDRTIG-2Uwfu9ZggGv_x/view?usp=sharing'
   const FULL_TAGLINE = ' Build professional skills in bakery, butchery, and kitchen operations through hands-on training, modern tools, and expert recipes.'
   const [typedTagline, setTypedTagline] = useState('')
   const [typingDone, setTypingDone] = useState(false)

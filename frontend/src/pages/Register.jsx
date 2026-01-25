@@ -165,35 +165,72 @@ export default function Register(){
         
         {/* Left Side - Form */}
         <div style={{
-          width: '100%', 
+          width: '100%',
           maxWidth: isMobile ? '100%' : '480px',
           flex: isMobile ? '1' : '0 1 480px'
         }}>
+          {/* Mobile Branding (like Login) - OUTSIDE form card */}
+          {isMobile && (
+            <div style={{
+              textAlign: 'center',
+              marginBottom: '30px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}>
+              <div style={{
+                width: '120px',
+                height: '120px',
+                background: 'rgba(87, 86, 86, 0.22)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
+                marginBottom: '20px'
+              }}>
+                <img
+                  src={appIcon}
+                  alt="App Icon"
+                  style={{ width: '80px', height: '80px', borderRadius: '16px', objectFit: 'contain', filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.25))' }}
+                />
+              </div>
+              <h1 style={{
+                fontSize: '36px',
+                fontWeight: 'bold',
+                color: '#ffffff',
+                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+                letterSpacing: '1px',
+                margin: '0 0 10px 0'
+              }}>
+                Chef Academy
+              </h1>
+            </div>
+          )}
           <div style={{
             background: 'rgba(255, 255, 255, 0.12)',
             backdropFilter: 'blur(30px)',
-            borderRadius: isMobile ? '20px' : '28px', 
-            boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', 
+            borderRadius: isMobile ? '20px' : '28px',
+            boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
             padding: isMobile ? '30px 20px' : '45px 40px',
             border: '1px solid rgba(255, 255, 255, 0.25)',
             animation: isExiting ? 'slideOutRight 0.35s ease-in forwards' : 'slideInLeft 0.6s ease-out'
           }}>
             <div style={{ marginBottom: '24px' }}>
-              <h2 style={{ 
-                fontSize: isMobile ? '26px' : '32px', 
-                fontWeight: 'bold', 
-                color: '#ffffff', 
+              <h2 style={{
+                fontSize: isMobile ? '26px' : '32px',
+                fontWeight: 'bold',
+                color: '#ffffff',
                 marginBottom: '6px',
                 letterSpacing: '0.5px',
                 textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3)'
               }}>Join Us</h2>
-              <p style={{ 
+              <p style={{
                 color: '#e5e7eb',
                 fontSize: isMobile ? '13px' : '15px',
                 textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)'
               }}>Create your chef account</p>
             </div>
-
             <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '16px' : '20px' }}>
               {/* Name */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
